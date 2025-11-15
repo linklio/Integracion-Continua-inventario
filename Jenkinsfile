@@ -42,7 +42,7 @@ pipeline {
 
     post {
         always {
-            sh "${DOCKER_COMPOSE} down"
+            echo 'Pipeline finalizado con exito :=)'
         }
     }
 }
