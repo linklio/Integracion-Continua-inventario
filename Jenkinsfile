@@ -14,8 +14,7 @@ pipeline {
 
         stage('Build Images') {
             steps {
-                sh "${DOCKER_COMPOSE} down"
-                sh "${DOCKER_COMPOSE} build"
+                    sh "${DOCKER_COMPOSE} build"
             }
         }
 
@@ -29,7 +28,7 @@ pipeline {
 
         stage('Run Backend Tests') {
             steps {
-                sh "${DOCKER_COMPOSE} run backend pytest || echo 'No tests found'"
+                sh "${DOCKER_COMPOSE} exec backend pytest || echo 'No tests found'"
             }
         }
 
