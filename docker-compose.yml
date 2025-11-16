@@ -15,6 +15,10 @@ services:
       - ./db-init:/docker-entrypoint-initdb.d
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-prootpassword"]
+      timeout: 10s
+      retries: 10
 
   backend:
     build:
@@ -22,7 +26,8 @@ services:
       dockerfile: Dockerfile
     container_name: flask_backend
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "5000:5000"
     networks:
@@ -37,11 +42,9 @@ services:
       - backend
     ports:
       - "4200:4200"
-    volumes:
-      - ./frontend/inventarios:/app
-      - /app/node_modules
     networks:
       - app-network
+    # ❗ SE ELIMINAN LOS VOLUMENES QUE DAÑAN LA APP
 
 networks:
   app-network:
@@ -49,3 +52,4 @@ networks:
 
 volumes:
   db_data:
+
