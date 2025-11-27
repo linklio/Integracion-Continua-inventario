@@ -38,7 +38,6 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ./frontend/inventarios:/app
       - /app/node_modules
     networks:
       - app-network
